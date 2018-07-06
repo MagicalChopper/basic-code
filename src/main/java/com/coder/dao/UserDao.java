@@ -16,4 +16,8 @@ public interface UserDao {
     void update();
 
     List<User> selectAll();
+
+    long getTotalCount() throws SQLException;
+
+    List<User> getPageList(int start, int rows) throws SQLException;
 }

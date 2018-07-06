@@ -168,10 +168,10 @@
                     var res = eval("("+result+")");
                     if (res.succ) {
                         $("#username-msg").html("<font color='green'>用户名可以注册</font>");
-                        checkUserName = true;
+                        checkUserNameFlag = true;
                     } else {
                         $("#username-msg").html("<font color='red'>用户名已存在</font>");
-                        checkUserName = false;
+                        checkUserNameFlag = false;
                     }
                 }
             });
@@ -190,23 +190,23 @@
             var regularLllegalCharacter = new RegExp("[^a-zA-Z0-9\_\u4e00-\u9fa5]","i");//非法字符
             if(regularNums.test(password)||password.length<6||password.length>16){
                 $("#password-msg").html("<font color='red'>密码必须6-16位非纯数字</font>");
-                checkPassword = false;
+                checkPasswordFlag = false;
             }else if(regularNums.test(password.charAt(0))){
                 $("#password-msg").html("<font color='red'>密码不能以数字开头</font>");
-                checkPassword = false;
+                checkPasswordFlag = false;
             }else if(regularLllegalCharacter.test(password)){
                 $("#password-msg").html("<font color='red'>密码含有非法字符</font>");
-                checkPassword = false;
+                checkPasswordFlag = false;
             }else{
                 $("#password-msg").html("");
-                checkPassword = true;
+                checkPasswordFlag = true;
             }
         }
 
         /**
          * 确认密码验证
          */
-        function checkConfirmPassword() {
+        function checkConfirmPasswordRight() {
             var confirmPassword = $("#confirmPassword").val();
             if(confirmPassword==""){
                 $("#confirmPassword-msg").html("<font color='red'>请输入密码</font>");
@@ -215,10 +215,10 @@
             var password = $("#reg-password").val();
             if(password!=confirmPassword){
                 $("#confirmPassword-msg").html("<font color='red'>两次输入密码不同</font>");
-                checkConfirmPassword = false;
+                checkConfirmPasswordFlag = false;
             }else{
                 $("#confirmPassword-msg").html("");
-                checkConfirmPassword = true;
+                checkConfirmPasswordFlag = true;
             }
         }
 
@@ -234,10 +234,10 @@
             var regularNums  = /^[0-9]+$/;//纯数字
             if(regularNums.test(phone) && phone.length>4 && phone.length<12){
                 $("#phone-msg").html("");
-                checkPhone = true;
+                checkPhoneFlag = true;
             }else{
                 $("#phone-msg").html("<font color='red'>手机号码不合法</font>");
-                checkPhone = false;
+                checkPhoneFlag = false;
             }
         }
 
@@ -251,14 +251,14 @@
             var emailPrefix = email.substr(0,index);//前缀不带@
             if(index<=0){
                 $("#email-msg").html("<font color='red'>邮箱不合法</font>");
-                checkEmail = false;
+                checkEmailFlag = false;
             }else{
                 if(emailSuffix=="@qq.com"||emailSuffix=="@163.com"){
                     $("#email-msg").html("");
-                    checkEmail = true;
+                    checkEmailFlag = true;
                 }else{
                     $("#email-msg").html("<font color='red'>邮箱不合法</font>");
-                    checkEmail = false;
+                    checkEmailFlag = false;
                 }
             }
         }
@@ -396,7 +396,7 @@
                     <td>确认密码:</td>
                     <td><input type="password" id="confirmPassword" name="confirmPassword"
                                class="easyui-validatebox" required="required"
-                               onblur="checkConfirmPassword()">
+                               onblur="checkConfirmPasswordRight()">
                         &nbsp;<font color="red">*</font><span id="confirmPassword-msg"></span>
                     </td>
                 </tr>

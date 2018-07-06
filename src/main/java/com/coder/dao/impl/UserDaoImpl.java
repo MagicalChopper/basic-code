@@ -6,6 +6,8 @@ import com.coder.util.jdbc.C3P0JdbcUtil;
 import com.coder.util.md5.EncryptMd5Util;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -58,5 +60,26 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> selectAll() {
         return null;
+    }
+
+    @Override
+    public long getTotalCount() throws SQLException {
+        QueryRunner qr = new QueryRunner(dataSource);
+        String sql = " select count(*) from user ";
+        long totalCount = qr.query(sql, new ScalarHandler<Long>(1));
+        return totalCount;
+    }
+
+    @Override
+    public List<User> getPageList(int start, int rows) throws SQLException {
+        QueryRunner qr = new QueryRunner(dataSource);
+        String sql = " select id,username,password,email,head,gender,phone,userInfo "
+                + "from user where 1=1 LIMIT ?,?  ";
+        Object[] params={
+                start,
+                rows
+        };
+        List<User> list = qr.query(sql,params,new BeanListHandler<>(User.class));
+        return list;
     }
 }

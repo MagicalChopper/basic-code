@@ -36,6 +36,7 @@ public class LoginAction extends BaseAction {
                 if(user.getPassword().equals(EncryptMd5Util.encryptMd5(password))){
                     result.put("succ",true);
                     result.put("msg","登陆成功");
+                    request.getSession().setAttribute("user",user);//设置登录信息
                     sendJsonMsg(response,result);
                 }else{
                     result.put("succ",false);

@@ -10,11 +10,6 @@ import java.util.Map;
 
 public abstract class BaseAction implements IAction {
     private static final Log log = LogFactory.getLog(BaseAction.class);
-    public void sendErrorMsg(HttpServletRequest request,
-                             String msg){
-        request.setAttribute("errorMsg", msg);
-    }
-
 
     public void sendJsonMsg(HttpServletResponse response, Map result){
         response.setContentType("text/html;charset=UTF-8");
